@@ -1,10 +1,8 @@
 import React from 'react';
-import CardList from './CardList';
-import SearchBox from './SearchBox';
-import Scroll from './Scroll'
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
+import Scroll from '../components/Scroll'
 import './App.css'
-import './App.html'
-
 
  class App extends React.Component {
      constructor(){
@@ -23,10 +21,11 @@ fetch('https://jsonplaceholder.typicode.com/users')
          this.setState({searchFeild : event.target.value})
          }
     render(){
+        const {searchFeild , robots} = this.state;
         const filterRobos = this.state.robots.filter(robots => {
-            return robots.name.toLowerCase().includes(this.state.searchFeild.toLowerCase());
+            return robots.name.toLowerCase().includes(searchFeild.toLowerCase());
            })  
-           if(this.state.robots.length === 0){
+           if(!robots.length){
                return (
                 <span className ="font-link tc">
                 <h1>LOADING</h1>
