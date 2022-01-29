@@ -2,6 +2,7 @@ import React from 'react';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll'
+import ErrorBoundry from '../components/ErrorBoundry';
 import './App.css'
 
  class App extends React.Component {
@@ -39,7 +40,9 @@ fetch('https://jsonplaceholder.typicode.com/users')
                 </span>
             <SearchBox seachChange = {this.onSearchChange}/>
             <Scroll>
+                <ErrorBoundry>
             <CardList robots ={filterRobos}/> 
+            </ErrorBoundry>
             </Scroll>
             </div>
             );
