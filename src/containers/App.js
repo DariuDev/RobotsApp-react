@@ -1,29 +1,36 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll'
 import ErrorBoundry from '../components/ErrorBoundry';
 import './App.css'
 
- class App extends React.Component {
-     constructor(){
-         super();
-          this.state ={
-             robots : [],
-             searchFeild : ''
+ function App () {
+    //  constructor(){
+    //      super();
+    //       this.state ={
+    //          robots : [],
+    //          searchFeild : ''
+    //      }
+    //  }
+//      componentDidMount(){
+// fetch('https://jsonplaceholder.typicode.com/users')
+// .then(response => response.json())
+// .then(users => {this.setState({robots : users})})
+//      }
+useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+         .then(response => response.json())
+         .then(users => {setRobots(users)})
+},[])
+
+         const[robots , setRobots] = useState([])
+         const[searchFeild , setSearchFeild] = useState('')
+         
+         const onSearchChange = (event) => {
+         setSearchFeild(event.target.value)
          }
-     }
-     componentDidMount(){
-fetch('https://jsonplaceholder.typicode.com/users')
-.then(response => response.json())
-.then(users => {this.setState({robots : users})})
-     }
-     onSearchChange = (event) => {
-         this.setState({searchFeild : event.target.value})
-         }
-    render(){
-        const {searchFeild , robots} = this.state;
-        const filterRobos = this.state.robots.filter(robots => {
+         const filterRobos = robots.filter(robots => {
             return robots.name.toLowerCase().includes(searchFeild.toLowerCase());
            })  
            if(!robots.length){
@@ -38,7 +45,7 @@ fetch('https://jsonplaceholder.typicode.com/users')
                 <span className ="font-link">
                 <h1>ROBOFRIENDS</h1>
                 </span>
-            <SearchBox seachChange = {this.onSearchChange}/>
+            <SearchBox seachChange = {onSearchChange}/>
             <Scroll>
                 <ErrorBoundry>
             <CardList robots ={filterRobos}/> 
@@ -48,5 +55,4 @@ fetch('https://jsonplaceholder.typicode.com/users')
             );
         }
      }
-}
-export default App;
+ export default App;
